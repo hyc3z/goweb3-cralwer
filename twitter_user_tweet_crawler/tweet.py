@@ -24,7 +24,7 @@ from .util.sql import insert_new_record, is_id_exists
 
 inject: str
 inject_js = config.inject_js
-with open(config.inject_js, 'r') as fp:
+with open(config.inject_js, 'r', encoding='utf-8') as fp:
     inject = fp.read()
 
 
@@ -72,7 +72,7 @@ class Tweet:
     @logger.catch
     def write_markdown(self):
         if not (Path(config.save) / f'{self.post_id}.md').exists():
-            with open(Path(config.save) / f'{self.post_id}.md', 'w') as f:
+            with open(Path(config.save) / f'{self.post_id}.md', 'w', encoding='utf-8') as f:
                 f.write(self.text)
 
     @logger.catch

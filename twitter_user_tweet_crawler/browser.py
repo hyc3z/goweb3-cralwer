@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 
 def get_browser(headless: bool = False) -> WebDriver:
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+    chrome_options.add_argument('--blink-settings=imagesEnabled=true')
     chrome_options.add_argument('--disable-remote-fonts')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')

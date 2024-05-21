@@ -52,7 +52,7 @@ def main():
         wait_list.append(tweet_executor.submit(i.get, 'https://twitter.com/404'))
     for ii in wait_list:
         ii.result()
-    driver.get('https://twitter.com/404')
+    driver.get('https://twitter.com/login')
     if not Path(work_directory / 'cookie.json').exists():
         input("Cookie cache was not found. Please press Enter after logging in.")
         write_config(driver.get_cookies())
