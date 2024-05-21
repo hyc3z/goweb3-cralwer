@@ -73,7 +73,7 @@ class Tweet:
     def write_markdown(self):
         if not (Path(config.save) / f'{self.post_id}.md').exists():
             with open(Path(config.save) / f'{self.post_id}.md', 'w', encoding='utf-8') as f:
-                f.write(self.text)
+                f.write("Post time: {}".format(self.post_time) + "\n" + self.text)
 
     @logger.catch
     def commit_sqlite(self):
