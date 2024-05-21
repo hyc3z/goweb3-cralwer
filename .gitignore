@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 cookie.json
 res/*.md
+**/output/**
 userdata/*
 log
 .idea

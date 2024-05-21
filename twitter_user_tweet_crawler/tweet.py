@@ -67,7 +67,7 @@ class Tweet:
     def download_res(self, url: str, path: str):
         if not (Path(config.save) / 'res' / path).exists():
             with open(Path(config.save) / 'res' / path, 'wb') as fp:
-                fp.write(get(url, proxies=config.proxy, headers=config.header).content)
+                fp.write(get(url, headers=config.header).content)
 
     @logger.catch
     def write_markdown(self):
@@ -112,14 +112,14 @@ class Tweet:
                 if 'card_img' in i.get_attribute('src'):
                     raise CrawlError("Can't crawl pictures")
             elemet: WebElement = base_dom.find_element(By.XPATH, "//div[contains(@class, \"tmd-down\")]")
-            sleep(1)
+            sleep(5)
             ActionChains(available_driver).move_to_element(elemet).click().perform()
             count: int = 0
             while available_driver.execute_script("return document.isParsed;") is False:
                 if (count := count + 1) > 10:
                     raise CrawlError("Timeout Error")
                 ActionChains(available_driver).move_to_element(elemet).click().perform()
-                sleep(1)
+                sleep(5)
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 executor.map(self.download_res, available_driver.execute_script("return document.fileList;"),
                              available_driver.execute_script("return document.fileName;"))
@@ -188,7 +188,7 @@ class Tweet:
             self.text = ''
         if self.img:
             for i in self.img:
-                self.text += f'\n![]({config.save}/res/{quote(str(i))})\n'
+                self.text += f'\n![img](./res/{quote(str(i))})\n'
         if self.video:
             self.text += f'<video src="{config.save}/res/{quote(str(self.video))}"></video>\n'
         if self.location:

@@ -44,7 +44,7 @@ def main():
     driver = get_browser()
 
     tweet_executor = get_executor(config['max_threads'])
-    work_list = get_multiple_browsers(config['max_threads'], headless=True)
+    work_list = get_multiple_browsers(config['max_threads'], headless=False)
     if config['headed']:
         work_list.extend(get_multiple_browsers(config['headed'], headless=False))
     wait_list = []
