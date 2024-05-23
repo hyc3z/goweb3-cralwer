@@ -83,7 +83,7 @@ class Tweet:
     @catch
     def load_data(self, available_driver: WebDriver):
         self.driver = available_driver
-
+        print("Start load tweet data.")
         def replace_emoji(string: str) -> str:
             if re.search(r'\!\[(.*?)\]\(https://.*\.twimg\.com/emoji/(.*?)\.svg\)', string, re.MULTILINE):
                 return re.sub(r'\!\[(.*?)\]\(https://.*\.twimg\.com/emoji/(.*?)\.svg\)', r'\1', string, re.MULTILINE)

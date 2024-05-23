@@ -22,4 +22,7 @@ poetry run python3 -m twitter_user_tweet_crawler
 3. Press the Enter key
 4. Done.
 
+运行前设置环境变量：
+set LOGIN_PWD=xxx
+
 TODO: 清理后台chrome 进程

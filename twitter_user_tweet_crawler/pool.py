@@ -5,7 +5,7 @@ from typing import Callable
 from rich.prompt import Confirm
 from selenium.webdriver.chrome.webdriver import WebDriver
 
-slow_mode = Confirm.ask("Do you want to enable slow mode?", default=False)
+slow_mode = False
 
 
 class ThreadPool:

@@ -9,3 +9,5 @@ header:
 inject_js: "script.js"
 save: "output"
 user: gogeweb3
+login_username: gogeweb3
+kill_chrome_process: True
