@@ -206,7 +206,7 @@ def main():
 
     driver = get_browser(headless=True)
 
-    work_list = get_multiple_browsers(config['max_threads'], headless=False)
+    work_list = get_multiple_browsers(config['max_threads'], headless=True)
     if config['headed']:
         work_list.extend(get_multiple_browsers(config['headed'], headless=True))
     for i in work_list:
