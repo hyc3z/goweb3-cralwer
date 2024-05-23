@@ -8,6 +8,6 @@ header:
     like Gecko) Chrome/118.0.0.0 Safari/537.36
 inject_js: "script.js"
 save: "output"
-user: gogeweb3
+user: LumaoDetective
 login_username: gogeweb3
 kill_chrome_process: True

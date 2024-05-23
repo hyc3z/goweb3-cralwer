@@ -118,6 +118,7 @@ def auto_login(driver, include_click_login=True):
     human_typing(input_element, config['login_username'])
     driver.implicitly_wait(1)
     input_element.send_keys(Keys.ENTER)
+    driver.implicitly_wait(2)
     # button_element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[role="button"]')))
     # button_element.click()
     input_pwd_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[type="password"]')))
@@ -175,20 +176,17 @@ def login_and_get_cookies(main_driver, worker_driver):
     for drivers in worker_driver:
         set_cookie(drivers, cookie=cookie)
 
-def get_with_retry(driver, url):
+def check_login(driver):
     try:
         retryCount = 0
         while retryCount < 3:
-            wait = WebDriverWait(driver, 10)
-            input_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[autocapitalize="sentences"][autocomplete="username"][type="text"]')))
+            wait = WebDriverWait(driver, 20)
+            input_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[autocomplete="username"]')))
             print("Input redirect showing again.")
             auto_login(driver=driver, include_click_login=False)
             retryCount += 1
     except Exception as ex:
         print("Input redirect not showing again.")
-    finally:
-        driver.get(url)
-        print("Get {} finished.".format(url))
 
 def main():
     from .tweet import Tweet
@@ -206,9 +204,9 @@ def main():
     selector = (By.XPATH, '//*/div[2]/div/div[3]/a[@role="link"]')
     (Path(config.save) / 'res').mkdir(exist_ok=True, parents=True)
 
-    driver = get_browser(headless=False)
+    driver = get_browser(headless=True)
 
-    work_list = get_multiple_browsers(config['max_threads'], headless=True)
+    work_list = get_multiple_browsers(config['max_threads'], headless=False)
     if config['headed']:
         work_list.extend(get_multiple_browsers(config['headed'], headless=True))
     for i in work_list:
@@ -220,7 +218,7 @@ def main():
         for ii in wait_list:
             ii.result()
         login_and_get_cookies(main_driver=driver, worker_driver=work_list)
-        get_with_retry(driver=driver, url="https://twitter.com/" + config.user)
+        driver.get("https://twitter.com/" + config.user)
 
         data_dict = {}
         pool = ThreadPool(work_list, tweet_executor)
@@ -230,6 +228,7 @@ def main():
             driver.execute_script("window.scrollBy(0, 300)")
             sleep(1)
             try:
+                check_login(driver=driver)
                 links = get_items_need_handle(driver=driver, selector=selector)
                 print("Found {} links.".format(len(links)))
                 for i in links:
