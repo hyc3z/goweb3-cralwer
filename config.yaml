@@ -1,7 +1,7 @@
 proxy:
   http: socks5://127.0.0.1:7890
   https: socks5://127.0.0.1:7890
-max_threads: 1
+max_threads: 5
 headed: 0
 header:
   User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,

@@ -25,4 +25,7 @@ poetry run python3 -m twitter_user_tweet_crawler
 运行前设置环境变量：
 set LOGIN_PWD=xxx
 
-TODO: 清理后台chrome 进程
+TODO: 
+Docker 挂载数据卷，传环境变量
+Uvicorn api server
+外挂index.db
