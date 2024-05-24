@@ -126,6 +126,7 @@ def auto_login(driver, include_click_login=True):
     human_typing(input_pwd_element, login_pwd)
     driver.implicitly_wait(1)
     input_pwd_element.send_keys(Keys.ENTER)
+    driver.implicitly_wait(5)
 
 def kill_chrome_processes():
     # 遍历所有进程
@@ -223,12 +224,15 @@ def main():
         data_dict = {}
         pool = ThreadPool(work_list, tweet_executor)
 
+        tick = 0
         while True:
             # Looping drop-down scroll bar
             driver.execute_script("window.scrollBy(0, 300)")
             sleep(1)
             try:
-                check_login(driver=driver)
+                if tick % 60 == 0:
+                    # TODO: move to worker
+                    check_login(driver=driver)
                 links = get_items_need_handle(driver=driver, selector=selector)
                 print("Found {} links.".format(len(links)))
                 for i in links:
@@ -239,6 +243,7 @@ def main():
                         pool.jobs.append(data_dict[tweet_id].load_data)
                         logger.info(full_url)
                 pool.check_and_work()
+                tick += 1
             except:
                 pass
     except KeyboardInterrupt:

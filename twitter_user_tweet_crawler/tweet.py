@@ -112,14 +112,14 @@ class Tweet:
                 if 'card_img' in i.get_attribute('src'):
                     raise CrawlError("Can't crawl pictures")
             elemet: WebElement = base_dom.find_element(By.XPATH, "//div[contains(@class, \"tmd-down\")]")
-            sleep(5)
+            sleep(1)
             ActionChains(available_driver).move_to_element(elemet).click().perform()
             count: int = 0
             while available_driver.execute_script("return document.isParsed;") is False:
                 if (count := count + 1) > 10:
                     raise CrawlError("Timeout Error")
                 ActionChains(available_driver).move_to_element(elemet).click().perform()
-                sleep(5)
+                sleep(1)
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 executor.map(self.download_res, available_driver.execute_script("return document.fileList;"),
                              available_driver.execute_script("return document.fileName;"))

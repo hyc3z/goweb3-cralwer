@@ -29,3 +29,8 @@ TODO:
 Docker 挂载数据卷，传环境变量
 Uvicorn api server
 外挂index.db
+
+Problem:
+转推没办法爬
+推文太短，而且经常几条推文是同一个内容
+llm总结
